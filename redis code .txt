@@ -1,0 +1,24 @@
+//aggiorna una pagina di redis.. quele pagina? quella che gli passi nella dir. ovviamente il parametro è un array lui sovrascriverà tutte le informazioni 
+function aggiona(parametro,dir)
+{
+    var user = JSON.stringify(parametro)
+    redis.call("JSON.SET", dir, "$", user);
+}
+
+
+//ritorna un intera pagina di redia passata come id sotto forma di array 
+async function user(id)
+{
+    const userr = await redis.call("JSON.GET", id, "$");
+    var utente = JSON.parse(userr)
+    
+    if(utente != null)
+    {
+        if(utente[0].length != undefined)
+            utente = utente[0]
+
+        return utente
+    }
+    else
+        return null
+}
